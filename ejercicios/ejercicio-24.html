@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leer y Mostrar CSV</title>
+</head>
+<body>
+    <h2>Selecciona un archivo CSV</h2>
+    <!-- Input para seleccionar un archivo CSV -->
+    <input type="file" id="fileInput" accept=".csv"> <br><br>
+    
+    <!-- Etiquetas para mostrar los valores leídos del archivo CSV -->
+    <label for="nombreLabel">Nombre:</label><br>
+    <span id="nombreLabel"></span><br>  <!-- Aquí se mostrará el nombre -->
+    
+    <label for="edadLabel">Edad:</label><br>
+    <span id="edadLabel"></span><br>    <!-- Aquí se mostrará la edad -->
+    
+    <label for="ciudadLabel">Ciudad:</label><br>
+    <span id="ciudadLabel"></span><br>  <!-- Aquí se mostrará la ciudad -->
+
+    <script>
+        // Añadimos un listener para detectar el cambio de archivo en el input
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            var file = event.target.files[0];  // Obtenemos el archivo seleccionado
+            if (file) {
+                var reader = new FileReader();  // Creamos una instancia de FileReader para leer el archivo
+                
+                // Esta función se ejecuta cuando el archivo se ha leído
+                reader.onload = function(e) {
+                    var csv = e.target.result;  // Obtenemos el contenido del archivo CSV
+                    var lines = csv.split("\n");  // Dividimos el contenido por líneas
+                    var headers = lines[0].split(",");  // Leemos las cabeceras (nombre, edad, ciudad)
+                    var data = lines[1].split(",");  // Leemos la primera fila de datos (ejemplo: Juan, 30, Madrid)
+
+                    // Asignamos los valores correspondientes a los elementos HTML
+                    document.getElementById('nombreLabel').textContent = data[0];  // Asignamos el nombre
+                    document.getElementById('edadLabel').textContent = data[1];    // Asignamos la edad
+                    document.getElementById('ciudadLabel').textContent = data[2];  // Asignamos la ciudad
+                };
+
+                // Leemos el archivo como texto
+                reader.readAsText(file);
+            }
+        });
+    </script>
+</body>
+</html>

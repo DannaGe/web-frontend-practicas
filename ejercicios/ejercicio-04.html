@@ -1,0 +1,36 @@
+<HTML>
+<HEAD>
+<TITLE> PROGRAMA DE FORMULARIO LIBRO </TITLE> <!-- Título de la página -->
+<SCRIPT LANGUAGE="JavaScript">
+<!-- HIDE FROM OTHERS BROWSERS --> 
+// Oculta el código para navegadores antiguos -->
+        function calcular(form) // Función que realiza los cálculos
+        {
+            // Calcula el doble del valor ingresado en "nEntrada" y lo asigna a "porDos"
+            form.porDos.value = form.nEntrada.value * 2; 
+            // Calcula el cuadrado del valor ingresado en "nEntrada" y lo asigna a "cuadrado"
+            form.cuadrado.value = form.nEntrada.value * form.nEntrada.value; 
+        }
+    
+//STOP HIDING FROM OTHERS BROWSERS --> 
+//Fin de la ocultación para navegadores antiguos -->
+</SCRIPT>
+</HEAD>
+<BODY>
+<FORM METHOD=POST> <!-- Inicio del formulario con el método POST -->
+        <!-- Campo de entrada para el valor numérico -->
+        Valor: <INPUT TYPE="text" NAME="nEntrada" VALUE=0 
+                onChange="calcular(this.form);"> <!-- Cuando el valor cambia, llama a la función calcular -->
+<BR> <!-- Salto de línea -->
+        <!-- Campo que muestra el doble del valor ingresado -->
+        Doble: <INPUT TYPE="text" NAME="porDos" VALUE=0 
+                onChange="this.form.nEntrada.value=this.value/2; 
+                calcular(this.form);"> <!-- Cuando cambia el valor, divide el valor mostrado entre 2 para actualizar "nEntrada" y recalcula -->
+<BR> <!-- Salto de línea -->
+        <!-- Campo que muestra el cuadrado del valor ingresado -->
+        Cuadrado: <INPUT TYPE="text" NAME="cuadrado" VALUE=0 
+                    onChange="this.form.nEntrada.value=Math.sqrt(this.value); 
+                    calcular(this.form);"> <!-- Cuando cambia el valor, calcula la raíz cuadrada para actualizar "nEntrada" y recalcula -->
+</FORM>
+</BODY>
+</HTML>

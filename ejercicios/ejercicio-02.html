@@ -1,0 +1,34 @@
+<HTML>
+<HEAD>
+<TITLE> Formulario con la forma </TITLE> <!-- Título de la página -->
+<SCRIPT LANGUAGE="JavaScript">
+<!-- HIDEN FROM OTHERS BROWSERS --> 
+//Oculta el código de JavaScript para navegadores antiguos -->
+        
+        function calcular(form) // Función para calcular el valor de la expresión
+        {
+            form.resultado.value = eval(form.entrada.value); // Evalúa la expresión ingresada y muestra el resultado en el campo "resultado"
+        }
+
+        function getExpresion(form) // Función que solicita la expresión matemática al usuario
+        {
+            form.entrada.blur(); // Quita el foco del campo "entrada"
+            // Solicita al usuario que introduzca una expresión matemática
+            form.entrada.value = prompt("Introduce la expresion matematica: ", "expresion"); 
+            calcular(form); // Llama a la función calcular para evaluar la expresión ingresada
+        }
+
+// STOP HIDING FROM OTHER BROWSERS --> 
+// Fin de la ocultación para navegadores antiguos -->
+</SCRIPT>
+</HEAD>
+<BODY>
+<FORM METHOD=POST> <!-- Inicio del formulario con el método POST -->
+Introduce una expresión Matemática:
+<INPUT TYPE="text" NAME="entrada" VALUE="" onfocus="getExpresion(this.form);"> <!-- Al enfocar, solicita al usuario que ingrese una expresión matemática -->
+<BR> <!-- Salto de línea -->
+El resultado de la expresión es:
+<INPUT TYPE="text" NAME="resultado" VALUE="" onfocus="this.blur();"> <!-- Muestra el resultado de la expresión, impidiendo que el usuario modifique el campo -->
+</FORM>
+</BODY>
+</HTML>

@@ -1,0 +1,49 @@
+<HTML>
+<HEAD>
+<TITLE> Formulario con botones Radio </TITLE> <!-- Título de la página -->
+<SCRIPT LANGUAGE="JavaScript">
+<!-- HIDE FROM OTHERS BROWSER --> 
+        function calcular (form, campo) // Función para realizar cálculos según el campo
+        {
+            if(campo == "resultado") // Si el campo modificado es "resultado"
+                { if(form.accion[1].checked) // Si está seleccionado "Raíz"
+                    {
+                        form.entrada.value = Math.sqrt(form.resultado.value); // Calcula la raíz cuadrada del resultado
+                    }
+                    else // Si está seleccionado "Doble"
+                    {
+                        form.entrada.value = form.resultado.value / 2; // Divide el resultado entre 2
+                    }
+                }
+            else // Si el campo modificado es "entrada"
+                { if(form.accion[1].checked) // Si está seleccionado "Raíz"
+                    {    
+                        form.resultado.value = form.entrada.value * form.entrada.value; // Calcula el cuadrado del valor de entrada
+                    }
+                    else // Si está seleccionado "Doble"
+                    {
+                        form.resultado.value = form.entrada.value * 2; // Multiplica el valor de entrada por 2
+                    }
+                }
+        }
+//STOP HIDING FROM OTHERS BROWSER --> 
+</SCRIPT>
+</HEAD>
+<BODY>
+<FORM METHOD=POST>
+        Valor de Entrada:
+        <INPUT TYPE="text" NAME="entrada" VALUE=0
+            onchange="calcular(this.form, this.name);"> <!-- Campo de entrada para el número --> <BR>
+        Accion:         <BR>
+        <INPUT TYPE="radio" NAME="accion" VALUE="twice"
+            onclick="calcular(this.form,this.name);"> <!-- Botón  la operación "Doble" -->
+        Doble <BR>
+        <INPUT TYPE="radio" NAME="accion" VALUE="square"
+            onclick="calcular (this.form,this.name)"> <!-- Botón la operación "Raíz" -->
+        Raiz <BR>
+        Resultado:
+        <INPUT TYPE="text" NAME="resultado" VALUE=0
+            onchange="calcular(this.form,this.name);"> <!-- Campo para el resultado -->
+</FORM>
+</BODY>
+</HTML>

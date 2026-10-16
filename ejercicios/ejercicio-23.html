@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar PDF</title>
+</head>
+<body>
+    <h2>Selecciona un archivo PDF</h2>
+    <input type="file" id="fileInput" accept="application/pdf"> <br><br>
+    <iframe id="pdfViewer" style="width: 50%; height: 650px;" frameborder="0"></iframe>
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            var file = event.target.files[0]; // Obtenemos el archivo
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {  // Mostramos el PDF en el elemento <iframe>
+                    document.getElementById('pdfViewer').src = e.target.result;
+                };
+                reader.readAsDataURL(file);  // Leemos el archivo como una URL de datos (base64)
+            }
+        });
+    </script>
+</body>
+</html>

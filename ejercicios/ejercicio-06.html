@@ -1,0 +1,49 @@
+<HTML>
+<HEAD>
+<TITLE>Programa con checkBox</TITLE> <!-- Título de la página -->
+<SCRIPT LANGUAGE="JavaScript">
+<!-- HIDE FROM OTHER BROWSER --> 
+        function calcular(form, callingField) // Función que realiza cálculos dependiendo del campo modificado
+        {
+            if (callingField == "resultado") // Si el campo modificado es "resultado"
+                  {
+                    if (form.cuadrado.checked) // Si está marcada la casilla "cuadrado"
+                    { 
+                    form.entrada.value = Math.sqrt(form.resultado.value); // Calcula la raíz cuadrada del "resultado"
+                    }
+                    else 
+                    { 
+                    form.entrada.value = form.resultado.value / 2; // Si no, divide el "resultado" entre 2
+                    }
+                  }
+            else // Si el campo modificado es "entrada"
+            {
+                    if (form.cuadrado.checked) // Si está marcada la casilla "cuadrado"
+                    { 
+                    form.resultado.value = form.entrada.value * form.entrada.value; // Calcula el cuadrado del valor de "entrada"
+                    }
+                    else 
+                    { 
+                    form.resultado.value = form.entrada.value * 2; // Si no, multiplica el valor de "entrada" por 2
+                    }
+            }
+        }   
+// STOP HIDING FROM OTHER BROWSER --> 
+</SCRIPT>
+</HEAD>
+<BODY>
+<FORM METHOD=POST> <!-- Formulario que usa el método POST -->
+        Valor de Entrada:
+        <INPUT TYPE="text" NAME="entrada" VALUE=0
+            onchange="calcular(this.form, this.name);"> <!-- Calcula cuando cambia el valor de "entrada" -->
+        <BR>
+        Acción elevar al cuadrado (por default doble):
+        <INPUT TYPE="checkbox" NAME="cuadrado"
+            onclick="calcular(this.form, this.name);"> <!-- Calcula cuando se selecciona/des-selecciona la casilla -->
+        <BR>
+        Resultado:
+        <INPUT TYPE="text" NAME="resultado" VALUE=0
+            onchange="calcular(this.form, this.name);"> <!-- Calcula cuando cambia el valor de "resultado" -->
+</FORM>
+</BODY>
+</HTML>

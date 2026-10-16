@@ -1,0 +1,34 @@
+<HTML>
+    <HEAD>
+    <TITLE> EJEMPLO</TITLE> <!-- Título de la página web -->
+    </HEAD>
+    <BODY>
+    <SCRIPT LANGUAGE="JavaScript">
+    <!-- HIDE FROM OTHER BROWSERS -->
+    // Muestra una alerta emergente al cargar la página
+    alert("Hola Bienvenido...");
+    // Escribe en el documento un mensaje con saltos de línea HTML
+    document.write("Bienvenido como estás <BR><BR>");
+    // Escribe en el documento un mensaje con espacios no separables y un salto de línea
+    document.writeln("&nbsp; &nbsp; Mensaje con salto de linea...");
+    // Escribe en el documento texto preformateado, manteniendo espacios y saltos de línea
+    document.writeln("<PRE>Salto una linea...</PRE>");
+    // Solicita al usuario que introduzca su nombre mediante una ventana emergente
+    var nom = prompt('Introduce tu nombre:', "Nombre.. aparece");
+    // Escribe un saludo personalizado con el nombre introducido por el usuario
+    document.write("<H1>Hola como estas: <H2>" + nom + " buenos días<BR>");
+    // Solicita al usuario que responda cuánto es 5+5 mediante una ventana emergente
+    var sum = prompt("Cuanto es 5+5",""); 
+    // Define el mensaje para una respuesta correcta
+    var correcta = "Tu respuesta es correcta";
+    // Define el mensaje para una respuesta incorrecta
+    var incorrecta = "Tu respuesta es incorrecta";
+    // Comprueba si la respuesta del usuario es igual a 10
+    // Si es igual, asigna el mensaje de correcta; de lo contrario, el de incorrecta
+    res = (sum == 10) ? correcta : incorrecta; 
+    // Escribe en el documento el resultado de la respuesta del usuario
+    document.write("La respuesta fue: " + res);
+    // STOP HIDING FROM OTHER BROWSERS 
+    </SCRIPT>
+    </BODY>
+</HTML>

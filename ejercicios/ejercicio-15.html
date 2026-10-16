@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardar Información en un Archivo</title>
+</head>
+<body>
+    <h2>Guardar Datos en un Archivo de Texto</h2>
+    <textarea id="content" rows="10" cols="30">Escribe algo aquí...</textarea><br><br>
+    <button onclick="saveToFile()">Guardar en Archivo</button>
+    <script>
+        function saveToFile() {
+            // Obtenemos el contenido del textarea
+            var content = document.getElementById("content").value;
+            // Solicitamos al usuario que ingrese el nombre del archivo
+            var filename = window.prompt("Ingresa el nombre para el archivo:", "archivo.txt");
+            // Validamos que el usuario haya ingresado un nombre
+            if (filename === null) {
+                // Si el usuario cancela el prompt, se detiene la función
+                return;
+            }
+            // Eliminamos espacios en blanco al inicio y al final del nombre del archivo
+            filename = filename.trim();
+            // Validamos que el nombre del archivo no esté vacío
+            if (filename === "") {
+                alert("El nombre del archivo no puede estar vacío.");
+                return; // Detenemos la ejecución si el nombre del archivo está vacío
+            }
+            // Aseguramos que el nombre del archivo termine con '.txt'
+            if (!filename.toLowerCase().endsWith(".txt")) {
+                filename += ".txt"; // Añadimos la extensión '.txt' si no está presente
+            }
+            // Creamos un blob de tipo texto
+            var blob = new Blob ([content], { type: "text/plain" });
+            // Creamos un enlace temporal para descargar el archivo
+            var link = document.createElement("a");
+            link.href = window.URL.createObjectURL (blob);
+            link.download = filename; //Nombre del archivo
+            // Simulamos un clic en el enlace para iniciar la descarga
+            link.click();
+            // Limpiamos el enlace temporal
+            window.URL.revokeObjectURL(link.href);
+        }
+    </script>
+</body>
+</html>

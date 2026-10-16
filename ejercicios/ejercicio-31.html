@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario con API Georef México</title>
+    <script>
+        // Función para obtener los estados desde la API de Georef México
+        async function obtenerEstados() {
+            try {
+                const respuesta = await fetch('https://gaia.inegi.org.mx/wscatgeo/v2/mgee/');
+                if (!respuesta.ok) {
+                    throw new Error('Error al obtener los estados');
+                }
+                const datos = await respuesta.json();
+                return datos.datos; // Devuelve un array de objetos con {cve_ent, nomgeo} para cada estado
+            } catch (error) {
+                console.error(error);
+                return []; // Devuelve un array vacío en caso de error
+            }
+        }
+
+        // Llenar el dropdown de estados usando los datos de la API
+        async function cargarEstados() {
+            const estados = await obtenerEstados(); // Obtiene la lista de estados
+            const estadoSelect = document.getElementById('estado'); // Selecciona el dropdown de estados
+            // Limpiar opciones previas en caso de recargar
+            estadoSelect.innerHTML = '<option value="">Selecciona un estado</option>';
+            estados.forEach(estado => {
+                const option = document.createElement('option');
+                option.value = estado.cve_ent; // Establece el valor como la clave del estado
+                option.textContent = estado.nomgeo; // Muestra el nombre del estado
+                estadoSelect.appendChild(option); // Agrega la opción al dropdown
+            });
+        }
+
+        // Función para obtener los municipios según el estado seleccionado desde la API de Georef México
+        async function obtenerCiudades(cve_ent) {
+            try {
+                const respuesta = await fetch(`https://gaia.inegi.org.mx/wscatgeo/v2/mgem/${cve_ent}`);
+                if (!respuesta.ok) {
+                    throw new Error('Error al obtener las ciudades');
+                }
+                const datos = await respuesta.json();
+                return datos.datos; // Devuelve un array de objetos con {cve_mun, nomgeo} para cada ciudad
+            } catch (error) {
+                console.error(error);
+                return []; // Devuelve un array vacío en caso de error
+            }
+        }
+
+        // Llenar el dropdown de ciudades según el estado seleccionado
+        async function cargarCiudades() {
+            const cve_ent = document.getElementById('estado').value; // Obtiene el valor del estado seleccionado
+            const ciudadSelect = document.getElementById('ciudad'); // Selecciona el dropdown de ciudades
+            // Limpiar opciones de ciudades previas
+            ciudadSelect.innerHTML = '<option value="">Selecciona una ciudad</option>';
+            if (cve_ent) { // Si hay un estado seleccionado
+                const ciudades = await obtenerCiudades(cve_ent); // Obtiene la lista de ciudades
+                ciudades.forEach(ciudad => {
+                    const option = document.createElement('option');
+                    option.textContent = ciudad.nomgeo; // Muestra el nombre de la ciudad
+                    ciudadSelect.appendChild(option); // Agrega la opción al dropdown
+                });
+            }
+        }
+
+        // Inicializar la carga de estados al cargar la página
+        window.onload = function () {
+            cargarEstados();
+        };
+    </script>
+</head>
+
+<body>
+    <h2>Formulario de Registro</h2>
+    <form>
+        <!-- Campo de texto para el nombre -->
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+        
+        <!-- Dropdown para seleccionar el estado, al cambiar ejecuta cargarCiudades() -->
+        <label for="estado">Selecciona tu Estado:</label>
+        <select id="estado" name="estado" onchange="cargarCiudades()" required>
+            <option value="">Selecciona un estado</option>
+        </select><br><br>
+        
+        <!-- Dropdown para seleccionar la ciudad -->
+        <label for="ciudad">Selecciona tu Ciudad:</label>
+        <select id="ciudad" name="ciudad" required>
+            <option value="">Selecciona una ciudad</option>
+        </select><br><br>
+        
+        <!-- Botón para enviar el formulario -->
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+
+</html>

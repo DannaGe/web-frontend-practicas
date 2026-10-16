@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML legend tag</title>
+    <style>
+        /* Estilo para el elemento legend, que actúa como título del fieldset */
+        legend {         color: rgb(189, 96, 203); /* Color del texto */
+                         font-size: 25px; /* Tamaño de la fuente */
+                         width: 100px; /* Ancho del legend */
+                         background-color: rgb(14, 16, 7); /* Color de fondo */}
+        /* Estilo para el fieldset, que agrupa los elementos de formulario */
+        fieldset {       width: 50%; /* Ancho del fieldset en relación a su contenedor */ }
+        /* Estilo para las etiquetas de los campos de formulario */
+        label {          font-size: 24px; /* Tamaño de la fuente de las etiquetas */ }
+        /* Estilo para los campos de entrada del formulario */
+        input {           border-radius: 5px; /* Bordes redondeados */
+                          width: 95%; /* Ancho del campo de entrada */ }
+    </style>
+</head>
+<body>
+    <fieldset>
+        <legend align="center">Login</legend> <!-- Título del formulario centrado -->
+        <form>
+            <!-- Etiqueta para el campo de nombre de usuario -->
+            <label for="">Username</label>
+            <br>
+            <!-- Campo de entrada para el nombre de usuario, obligatorio -->
+            <input type="text" required>
+            <br>
+            <!-- Etiqueta para el campo de contraseña -->
+            <label for="">Password</label>
+            <br>
+            <!-- Campo de entrada para la contraseña, obligatorio -->
+            <input type="password" required>
+            <br><br>
+            <!-- Botón para enviar el formulario -->
+            <button>Submit</button>
+        </form>
+    </fieldset>
+</body>
+</html>

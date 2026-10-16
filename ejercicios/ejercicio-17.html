@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <!-- Configuración para que la página sea responsiva en diferentes dispositivos -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardar y Visualizar Archivo de Texto</title>
+</head>
+<body>
+    <!-- Título principal de la página -->
+    <h2>Guardar y Visualizar Archivo de Texto</h2>
+
+    <!-- Sección para guardar el archivo -->
+    <!-- Área de texto donde el usuario puede escribir contenido -->
+    <textarea id="content" rows="10" cols="30">Escribe algo aquí...</textarea><br><br>
+    <!-- Botón que al ser clicado ejecuta la función saveToFile para guardar el contenido -->
+    <button onclick="saveToFile()">Guardar en Archivo</button><br><br>
+
+    <!-- Sección para visualizar el archivo -->
+    <h2>Selecciona un archivo de texto (.txt)</h2>
+    <!-- Input de tipo archivo que acepta solo archivos .txt -->
+    <input type="file" id="fileInput" accept=".txt"/>
+    <!-- Elemento preformateado donde se mostrará el contenido del archivo seleccionado -->
+    <pre id="fileContent"></pre>
+
+    <script>
+        // Función para guardar el contenido del textarea en un archivo de texto
+        function saveToFile() {
+            // Obtiene el valor del textarea con id "content"
+            var content = document.getElementById("content").value;
+            // Crea un objeto Blob con el contenido y el tipo MIME "text/plain"
+            var blob = new Blob([content], { type: "text/plain" });
+            // Crea un elemento <a> temporal para descargar el archivo
+            var link = document.createElement("a");
+            // Genera una URL para el Blob creado
+            link.href = window.URL.createObjectURL(blob);
+            // Define el nombre del archivo que se descargará
+            link.download = "archivo.txt";
+            // Simula un clic en el enlace para iniciar la descarga
+            link.click();
+            // Revoca la URL creada para liberar memoria
+            window.URL.revokeObjectURL(link.href);
+        }
+
+        // Añade un event listener al input de tipo archivo para detectar cambios (selección de archivo)
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            // Obtiene el archivo seleccionado
+            var file = event.target.files[0];
+            // Verifica que se haya seleccionado un archivo
+            if (file) {
+                // Crea una instancia de FileReader para leer el contenido del archivo
+                var reader = new FileReader();
+                // Define la función que se ejecutará una vez que el archivo haya sido leído
+                reader.onload = function(e) {
+                    // Asigna el contenido leído al elemento pre con id "fileContent"
+                    document.getElementById('content').textContent = e.target.result;
+                    // Opcional: también puedes mostrar el contenido en el textarea
+                    // document.getElementById('content').textContent = e.target.result;
+                };
+                // Inicia la lectura del archivo como texto
+                reader.readAsText(file);
+            }
+        });
+    </script>
+</body>
+</html>

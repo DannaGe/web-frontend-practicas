@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<TITLE> Listado 6.9 Formulario interactivo </TITLE> <!-- Título de la página -->
+<SCRIPT LANGUAGE="JavaScript">
+<!-- HIDE FROM OTHER BROWSER --> 
+// Oculta el código para navegadores que no soportan JavaScript 
+        function limpiarCampo(field) // Función para limpiar el campo de texto
+        {
+            // verifica si el campo referenciado tiene el valor por defecto
+            if(field.value == field.defaultValue)
+            {
+                // por lo tanto hay que limpiar el campo 
+                field.value = ""; // Limpia el valor del campo
+            }
+            }
+            
+        function checarCampo(field) // Función para verificar el campo de texto
+        {
+            if(field.value == "") // Si el campo está vacío
+            {
+                field.value = field.defaultValue; // Restaura el valor por defecto
+            }
+        }
+            
+        function Mayuscula(form) // Función para convertir el texto a mayúsculas
+        { 
+            var texto = form.cuadroTexto.value; // Obtiene el valor del cuadro de texto
+            form.cuadroTexto.value = form.cuadroTexto.value.toUpperCase(); // Convierte el texto a mayúsculas
+        }
+// STOP HIDING FROM OTHER BROWSERS --> 
+// Fin de la ocultación para navegadores antiguos -->
+</SCRIPT>
+</HEAD>    
+<BODY>
+<FORM METHOD="POST"> <!-- Inicio del formulario con método POST -->
+<INPUT TYPE="text" NAME="nombre" VALUE="Nombre" 
+        Al enfocar, limpia el campo si es el valor por defecto
+        onfocus="limpiarCampo(this);"
+        onblur="checarCampo(this);"> <!-- Al perder el foco, verifica si el campo está vacío -->
+<BR> <!-- Salto de línea -->
+<INPUT TYPE="text" NAME="email" VALUE="E-mail" 
+        Limpia el campo al enfocar
+        onfocus="limpiarCampo(this);" 
+        onblur="checarCampo(this);"> <!-- Verifica el campo al perder el foco -->
+<BR> <!-- Salto de línea -->
+<INPUT TYPE="text" NAME="Telefono" VALUE="Teléfono" 
+        onfocus="limpiarCampo(this);" 
+        onblur="checarCampo(this);"> <!-- Verifica el campo al perder el foco -->
+<BR> <!-- Salto de línea -->
+            
+<INPUT TYPE="TEXTAREA" NAME="Descripción" VALUE="Descripción" 
+        onfocus="limpiarCampo(this);" 
+        onblur="checarCampo(this);"> <!-- Verifica el campo al perder el foco -->
+<BR> <!-- Salto de línea -->
+            
+<TEXTAREA VALUE="Descripción" NAME="cuadroTexto" rows="4" cols="33" 
+        onfocus="limpiarCampo(this);"
+        onblur="checarCampo(this);">Texto por default </TEXTAREA> <!-- Texto predefinido en el área de texto -->
+<BR> <!-- Salto de línea -->
+<INPUT TYPE="button" NAME="Mayúsculas" VALUE="MAYUSCULAS" onclick="Mayuscula(this.form);"> <!-- Botón que convierte el texto a mayúsculas al hacer clic -->
+</FORM> <!-- Fin del formulario -->
+
+</BODY>
+</HTML>

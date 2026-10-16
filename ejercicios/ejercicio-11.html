@@ -1,0 +1,40 @@
+<HEAD>
+    <TITLE> Ejemplo de tabla de multiplicar </TITLE> <!-- Título de la página -->
+    <SCRIPT LANGUAGE="Javascript">
+    <!-- HIDE FROM OTHER BROWSERS --> 
+    
+            function calculartabla(form) // Función para calcular la tabla de multiplicar
+            {
+            var num = 1; // Inicializa el multiplicador en 1
+            var number = form.numero.value; // Obtiene el número introducido por el usuario
+            form.elements[num].value = number * num++; // Multiplica el número por 1
+            form.elements[num].value = number * num++; 
+            form.elements[num].value = number * num++; 
+            form.elements[num].value = number * num++; 
+            form.elements[num].value = number * num++; 
+            form.elements[num].value = number * num++; 
+            form.elements[num].value = number * num++; 
+            form.elements[num].value = number * num++; 
+            form.elements[num].value = number * num++; 
+            form.elements[num].value = number * num++; 
+            }
+    //STOP HIDING FROM OTHERS BROWSERS --> 
+    </SCRIPT>
+    </HEAD>
+    <BODY>  <FORM METHOD=POST>
+    Numero: <INPUT TYPE=text NAME="numero" VALUE=1 
+        onChange="calculartabla(this.form);"> <!-- Campo de entrada para el número, recalcula cuando cambia --> <BR>
+    x 1 = <INPUT TYPE=text NAME="1" VALUE=1 onfocus="blur();"> <!-- Resultado de la multiplicación por 1 --> <BR>
+    x 2 = <INPUT TYPE=text NAME="2" VALUE=2 onfocus="blur();"> <BR>
+    x 3 = <INPUT TYPE=text NAME="3" VALUE=3 onfocus="blur();"> <BR>
+    x 4 = <INPUT TYPE=text NAME="4" VALUE=4 onfocus="blur();"> <BR>
+    x 5 = <INPUT TYPE=text NAME="5" VALUE=5 onfocus="blur();"> <BR>
+    x 6 = <INPUT TYPE=text NAME="6" VALUE=6 onfocus="blur();"> <BR>
+    x 7 = <INPUT TYPE=text NAME="7" VALUE=7 onfocus="blur();"> <BR>
+    x 8 = <INPUT TYPE=text NAME="8" VALUE=8 onfocus="blur();"> <BR>
+    X 9 = <INPUT TYPE=text NAME="9" VALUE=9 onfocus="blur();"> <BR>
+    x 10 = <INPUT TYPE=text NAME="10" VALUE=10 onFocus="this.blur();"> <BR>
+    <INPUT TYPE=button NAME="calcular" VALUE="CALCULAR" onclick="calculartabla(this.form);"> <!-- Botón para recalcular la tabla -->
+    </FORM>
+    </BODY>
+    </HTML>

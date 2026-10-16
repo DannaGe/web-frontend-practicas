@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardar CSV en un Archivo</title>
+</head>
+<body>
+    <h2>Guardar Datos CSV en un Archivo</h2>
+
+    <!-- Botón que llama a la función saveCSV() al hacer clic -->
+    <button onclick="saveCSV()">Guardar CSV</button>
+
+    <script>
+        function saveCSV() {
+            // Datos de ejemplo en formato CSV (separados por comas y nuevas líneas)
+            var data = "Nombre,Edad,Ciudad\nJuan,30,Madrid\nMaria,25,Barcelona";
+
+            // Creamos un blob con los datos en formato CSV
+            var blob = new Blob([data], { type: "text/csv" });
+
+            // Creamos un enlace temporal para descargar el archivo
+            var link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob); // Asignamos la URL del blob al enlace
+            link.download = "datos.csv"; // Nombre del archivo a descargar
+
+            // Simulamos un clic en el enlace para iniciar la descarga
+            link.click();
+
+            // Limpiamos el enlace temporal después de la descarga
+            window.URL.revokeObjectURL(link.href);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<TITLE> Programa Formulario cálculos </TITLE> <!-- Título de la página -->
+<SCRIPT LANGUAGE="JavaScript">
+<!-- HIDE FROM OTHER BROWSERS --> 
+        function calcular(form, campo) // Función que calcula los valores basándose en el campo que se modifica
+        {
+            if (campo == "entrada") // Si el campo modificado es "entrada"
+                {
+                // Calcula el doble del valor de "entrada" y lo asigna al campo "por Dos"
+                form.porDos.value = form.entrada.value * 2;
+                // Calcula el cuadrado del valor de "entrada" y lo asigna al campo "cuadrado"
+                form.cuadrado.value = form.entrada.value * form.entrada.value;
+                }
+            else if (campo == "porDos") // Si el campo modificado es "porDos"
+                    {
+                    // Calcula el valor original dividiendo el valor en "porDos" entre 2 y lo asigna a "entrada"
+                    form.entrada.value = form.porDos.value / 2;
+                    // Calcula el cuadrado del valor de "entrada" y lo asigna al campo "cuadrado"
+                    form.cuadrado.value = form.entrada.value * form.entrada.value;
+                    }
+                else // Si el campo modificado es "cuadrado"
+                {
+                    // Calcula la raíz cuadrada del valor en "cuadrado" y lo asigna a "entrada"
+                    form.entrada.value = Math.sqrt(form.cuadrado.value);
+                    // Calcula el doble del valor de "entrada" y lo asigna al campo "porDos"
+                    form.porDos.value = form.entrada.value * 2;
+                }
+            }
+// STOP HIDING FROM OTHERS BROWSERS --> 
+</SCRIPT>  
+</HEAD>    
+<BODY>
+<FORM METHOD=POST> <!-- Inicio del formulario con el método POST -->
+        <!-- Campo de entrada para el número base -->
+        Entrada: <INPUT TYPE="text" NAME="entrada" VALUE=0 
+                  onChange="calcular(this.form,this.name);"> <!-- Cuando el valor cambia, llama a la función "calcular" pasando el campo "entrada" -->
+        <BR>
+        <!-- Campo que muestra el doble del valor ingresado en "entrada" -->
+        Doble: <INPUT TYPE="text" NAME="porDos" VALUE=0 
+                onChange="calcular(this.form,this.name);"> <!-- Cuando el valor cambia, llama a la función "calcular" pasando el campo "porDos" -->
+        <BR> 
+        <!-- Campo que muestra el cuadrado del valor ingresado en "entrada" -->
+        Cuadrado: <INPUT TYPE="text" NAME="cuadrado" VALUE=0 
+                   onChange="calcular(this.form,this.name);"> <!-- Cuando el valor cambia, llama a la función "calcular" pasando el campo "cuadrado" -->
+</FORM>    
+</BODY>
+</HTML>

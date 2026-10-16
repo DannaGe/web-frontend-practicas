@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Personas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"] {
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #e688ce;
+            color: white;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: rgb(161, 211, 231);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: rgb(168, 188, 231);
+        }
+
+        #saveJsonButton {
+            background-color: rgb(169, 126, 180);
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        #saveJsonButton:hover {
+            background-color: rgb(212, 146, 238);
+        }
+
+        /* Estilos para limitar la altura  de la tabla */
+        #personTableBody {
+            display: block;
+            max-height: 150px; /* Aproximadamente para mostrar 4 filas */
+            overflow-y: auto; /* Permite el desplazamiento vertical */
+        }
+
+        /* Estilo para que las celdas mantengan su alineacion cuando se usa scroll */
+        #personaTableBody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        thead,
+        tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed; /* Para mantener el tamaño de las celdas en sincronia */
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Formulario de Registro de Personas</h2>
+
+    <!-- Formulario para agregar personas -->
+    <form id="personForm">
+        <label for="clave">Clave:</label><br>
+        <input type="text" id="clave" required><br>
+
+        <label for="nombre">Nombre:</label><br>
+        <input type="text" id="nombre" required><br>
+
+        <label for="fechaNac">Fecha de Nacimiento:</label><br>
+        <input type="date" id="fechaNac" required><br>
+
+        <label for="edad">Edad:</label><br>
+        <input type="number" id="edad" required><br>
+
+        <button type="submit">Agregar Persona</button>
+    </form>
+
+    <h2>Personas Registradas</h2>
+
+    <!-- Tabla para mostrar los registros de personas -->
+    <table>
+        <thead>
+            <tr>
+                <th>Clave</th>
+                <th>Nombre</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Edad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="personTableBody">
+            <!-- Aquí se mostrarán los registros -->
+        </tbody>
+    </table>
+
+
+    <!-- Botones para descargar y cargar los registros con archivos JSON -->
+    <button id="saveJsonButton">Guardar en JSON</button>
+    <input type="file" id="jsonFileInput" accept=".json">
+    <button id="loadJsonButton">Cargar desde JSON</button>
+
+    <script>
+
+        // Agregar para almacenar los registros de personas
+        let personas = [];
+
+        // Obtener los elementos del formulario
+        const form = document.getElementById('personForm');
+        const claveInput = document.getElementById('clave');
+        const nombreInput = document.getElementById('nombre');
+        const fechaNacInput = document.getElementById('fechaNac');
+        const edadInput = document.getElementById('edad');
+        const tableBody = document.getElementById('personTableBody');
+        const saveJsonButton = document.getElementById('saveJsonButton');
+        const loadJsonButton = document.getElementById('loadJsonButton');
+        const jsonFileInput = document.getElementById('jsonFileInput');
+
+        // Escuchar el evento de envio del formulario
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); // Evitar que el formulario se envie automaticamente
+
+            // Crear un objeto con los datos de la persona
+            const persona = {
+                clave: claveInput.value,
+                nombre: nombreInput.value,
+                fechaNac: fechaNacInput.value,
+                edad: edadInput.value
+            };
+
+            // Agregar la persona al arreglo
+            personas.push(persona);
+
+            // Limpiar los campos del formulario
+            form.reset();
+
+            // Actualizar la tabla para mostrar el nuevo registro
+            actualizarTabla();
+        });
+
+        // Funcion para actualizar la tabla de registro de persona
+        function actualizarTabla() {
+            // Limpiar la tabla
+            tableBody.innerHTML = '';
+
+            // Recorrer el arreglo de personas y agregar una fila para cada una
+            personas.forEach(function (persona, index) {
+                const row = document.createElement('tr');
+
+                // Crear las celdas de la fila
+                const claveCell = document.createElement('td');
+                claveCell.textContent = persona.clave;
+
+                const nombreCell = document.createElement('td');
+                nombreCell.textContent = persona.nombre;
+
+                const fechaNacCell = document.createElement('td');
+                fechaNacCell.textContent = persona.fechaNac;
+
+                const edadCell = document.createElement('td');
+                edadCell.textContent = persona.edad;
+
+                // Celda para el boton de eliminar
+                const accionesCell = document.createElement('td');
+                const eliminarButton = document.createElement('button');
+                eliminarButton.textContent = 'Eliminar';
+                eliminarButton.addEventListener('click', function () {
+                    eliminarPersona(index); // Limpiar la funcion para eliminar la persona
+                });
+
+                // Agregar el boton a la celda de acciones
+                accionesCell.appendChild(eliminarButton);
+
+                // Agregar las celdas a la fila
+                row.appendChild(claveCell);
+                row.appendChild(nombreCell);
+                row.appendChild(fechaNacCell);
+                row.appendChild(edadCell);
+                row.appendChild(accionesCell); // Agregar la celda de acciones
+
+                // Agregar la fila a la tabla
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Funcion para eliminar una persona del arreglo y actualizar la tabla
+        function eliminarPersona(index) {
+            personas.splice(index, 1); // Eliminar el registro del arreglo
+            actualizarTabla(); // Actualizar la tabla para reflejar los cambios
+        }
+
+        // Funcion para guardar los registros en un archivos JSON y permitir la descarga
+        saveJsonButton.addEventListener('click', function () {
+            const jsonData = JSON.stringify(personas, null, 2); // Convertir arreglo a JSON
+            const blob = new Blob([jsonData], { type: 'application/json' }); // Crear un blob
+            const url = URL.createObjectURL(blob); // Crear una URL para el Blob
+
+            // Crear un enlace de descarga y hacer clic en el para descargar el archivo
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'personas.json'; // Nombre del archivo JSON
+            a.click();
+
+            // Liberar la URL del Blob despues de la descarga
+            URL.revokeObjectURL(url);
+        });
+
+        // Funcion para cargar registros desde un archivo JSON
+        loadJsonButton.addEventListener('click', function() {
+            const file = jsonFileInput.files[0]; // Cambiar de jsonFileInput.file[0] a jsonFileInput.files[0]
+
+            if (file) {
+                const reader = new FileReader();
+
+                // Leer el contenido del archivo JSON
+                reader.onload = function(e) {
+                    try {
+                        // alert("Archivo " +e);
+                        const jsonData = JSON.parse(e.target.result); // Parsear el contenido JSON
+                        personas = jsonData; // Asignar los datos cargados al arreglo de personas
+                        actualizarTabla(); // Actualizar la tabla para mostrar los datos cargados
+                    } catch (error) {
+                        alert("Error al leer el archivo JSON");
+                    }
+                };
+                reader.readAsText(file);  // Leer el archivo como texto
+            } else {
+                alert("Por favor selecciona un archivo JSON.");
+            }
+        });
+
+
+        
+    </script>
+    
+</body> 
+</html>

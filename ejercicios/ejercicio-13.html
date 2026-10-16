@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Metadatos básicos del documento -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Datos Personales y Académicos</title>
+    
+    <!-- Estilos CSS para el formulario -->
+    <style>
+        /* Estilo general del cuerpo de la página */
+        body {
+            font-family: Arial, sans-serif; /* Fuente utilizada en la página */
+            margin: 20px; /* Margen alrededor del contenido de la página */
+        }
+
+        /* Estilo para cada grupo de formulario */
+        .form-group {
+            margin-bottom: 15px; /* Espacio inferior entre grupos de formulario */
+        }
+
+        /* Estilo para las etiquetas de los campos */
+        label {
+            font-weight: bold; /* Texto en negrita */
+            display: block; /* La etiqueta ocupa toda la línea */
+            margin-bottom: 5px; /* Espacio inferior entre la etiqueta y el campo */
+        }
+
+        /* Estilo para los campos de entrada y elementos de formulario */
+        input[type="text"], 
+        input[type="email"], 
+        input[type="password"], 
+        input[type="date"], 
+        select, 
+        textarea {
+            width: 100%; /* Ancho completo del contenedor */
+            padding: 8px; /* Espaciado interno */
+            margin-top: 5px; /* Espacio superior entre el campo y la etiqueta */
+            box-sizing: border-box; /* Incluye padding y border en el ancho total */
+        }
+
+        /* Espaciado para los botones de radio y casillas de verificación */
+        input[type="radio"], 
+        input[type="checkbox"] {
+            margin-right: 5px; /* Espacio a la derecha de cada botón */
+        }
+
+        /* Estilo específico para áreas de texto */
+        textarea {
+            height: 80px; /* Altura fija para el área de texto */
+        }
+
+        /* Estilo para los contenedores de botones de acción */
+        .buttons {
+            margin-top: 20px; /* Espacio superior antes de los botones */
+            display: flex; /* Utiliza flexbox para el diseño */
+            justify-content: space-between; /* Distribuye los botones en extremos opuestos */
+        }
+
+        /* Estilo para los botones dentro del contenedor .buttons */
+        .buttons input {
+            padding: 10px 20px; /* Espaciado interno de los botones */
+        }
+
+        /* Estilos para los elementos legend dentro de fieldset */
+        legend {
+            color: rgb(189, 96, 203); /* Color del texto */
+            font-size: 25px; /* Tamaño de fuente */
+            background-color: rgb(14, 16, 7); /* Color de fondo */
+            color: #ffffff; /* Color del texto para asegurar legibilidad */
+            padding: 5px 10px; /* Espaciado interno */
+            border-radius: 5px; /* Bordes redondeados */
+        }
+
+        /* Estilos para el grupo de botones de radio de Sexo */
+        .sexo-group {
+            display: flex; /* Utiliza flexbox para alinear los botones */
+            align-items: center; /* Alinea verticalmente al centro */
+            gap: 15px; /* Espacio entre los botones */
+        }
+
+        /* Estilos para los grupos de Edad y Fecha de Nacimiento */
+        .edad-fecha-group {
+            display: flex; /* Utiliza flexbox para alinear los campos */
+            gap: 20px; /* Espacio entre los campos */
+            margin-top: 15px; /* Espacio superior antes del grupo */
+        }
+
+        /* Estilos para el campo de Correo Electrónico con @gmail.com fijo */
+        .email-group {
+            display: flex; /* Utiliza flexbox para alinear el input y el texto fijo */
+            align-items: center; /* Alinea verticalmente al centro */
+        }
+
+        /* Estilos para el input dentro de .email-group */
+        .email-group input[type="text"] {
+            flex: 1; /* El input ocupa todo el espacio disponible */
+            margin-right: 5px; /* Espacio a la derecha del input */
+        }
+
+        /* Estilos para el texto fijo @gmail.com */
+        .email-group .fixed-text {
+            padding: 8px; /* Espaciado interno */
+            background-color: #f0f0f0; /* Color de fondo */
+            border: 1px solid #ccc; /* Borde gris claro */
+            border-radius: 4px; /* Bordes ligeramente redondeados */
+            white-space: nowrap; /* Evita el salto de línea */
+        }
+
+        /* Estilos para el grupo de Habilidades, organizados en dos columnas */
+        .habilidades {
+            display: flex; /* Utiliza flexbox para alinear las columnas */
+            gap: 20px; /* Espacio entre las columnas */
+            margin-top: 10px; /* Espacio superior antes del grupo */
+        }
+
+        /* Estilos para las columnas izquierda y derecha dentro de Habilidades */
+        .habilidades .left, 
+        .habilidades .right {
+            flex: 1; /* Cada columna ocupa el mismo espacio */
+        }
+
+        /* Estilos para las etiquetas dentro de las columnas de Habilidades */
+        .habilidades .left label, 
+        .habilidades .right label {
+            display: flex; /* Utiliza flexbox para alinear el checkbox y el texto */
+            align-items: center; /* Alinea verticalmente al centro */
+            margin-bottom: 10px; /* Espacio inferior entre las etiquetas */
+        }
+
+        /* Alinear ligeramente el grupo derecho hacia abajo */
+        .habilidades .right {
+            margin-top: 5px; /* Ajusta este valor según sea necesario */
+        }
+
+        /* Estilos para dispositivos con pantallas pequeñas */
+        @media (max-width: 600px) {
+            /* Cambiar la dirección flex de Edad y Fecha de Nacimiento a columna */
+            .edad-fecha-group {
+                flex-direction: column;
+            }
+
+            /* Cambiar la dirección flex de Habilidades a columna */
+            .habilidades {
+                flex-direction: column;
+            }
+
+            /* Establecer el ancho al 100% para las columnas izquierda y derecha en Habilidades */
+            .habilidades .left, 
+            .habilidades .right {
+                width: 100%;
+            }
+
+            /* Cambiar la dirección flex de los botones a columna y añadir espacio entre ellos */
+            .buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            /* Reducir el tamaño de la fuente y ajustar el ancho del legend en pantallas pequeñas */
+            legend {
+                font-size: 20px; /* Tamaño de fuente reducido */
+                width: auto; /* Ancho automático */
+            }
+        }
+
+        /* Comentario: Ajustes adicionales para mejorar la alineación si es necesario */
+        /*
+        .habilidades .right {
+            margin-top: 10px; /* Ajusta este valor según sea necesario }*/
+    </style>
+</head>
+<body>
+    <h2>Formulario de Datos Personales y Académicos</h2>
+
+    <form>
+        <!-- Datos Personales -->
+        <fieldset>
+            <legend>Datos Personales</legend>
+
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" maxlength="20" required>
+            </div>
+
+            <div class="form-group">
+                <label for="apaterno">Apellido:</label>
+                <input type="text" id="apaterno" name="apaterno" maxlength="20" required>
+            </div>
+
+            <!-- Sexo en línea -->
+            <div class="form-group">
+                <label>Sexo:</label>
+                <div class="sexo-group">
+                    <label><input type="radio" id="masculino" name="sexo" value="M" required> Masculino</label>
+                    <label><input type="radio" id="femenino" name="sexo" value="F" required> Femenino</label>
+                    <label><input type="radio" id="otro" name="sexo" value="O"> Otro</label>
+                </div>
+            </div>
+
+            <!-- Edad y Fecha de Nacimiento en filas separadas -->
+            <div class="form-group">
+                <div class="edad-fecha-group">
+                    <div>
+                        <label for="edad">Edad:</label>
+                        <input type="text" id="edad" name="edad" pattern="\d+" required>
+                    </div>
+
+                    <div>
+                        <label for="fecha_nac">Fecha de Nacimiento:</label>
+                        <input type="date" id="fecha_nac" name="fecha_nac" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Correo Electrónico con @gmail.com -->
+            <div class="form-group">
+                <label for="email_usuario">Correo Electrónico:</label>
+                <div class="email-group">
+                    <input type="text" id="email_usuario" name="email_usuario" maxlength="50" required pattern="^[a-zA-Z0-9._%+-]+$" title="Solo se permiten caracteres válidos antes de @gmail.com">
+                    <span class="fixed-text">@gmail.com</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" maxlength="15" required>
+            </div>
+
+            <div class="form-group">
+                <label for="domicilio">Domicilio:</label>
+                <textarea id="domicilio" name="domicilio" maxlength="100" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="estado">Estado:</label>
+                <select id="estado" name="estado" required>
+                    <option value="" disabled selected>Seleccione un estado</option>
+                    <option value="aguascalientes">Aguascalientes</option>
+                    <option value="baja_california">Baja California</option>
+                    <option value="baja_california_sur">Baja California Sur</option>
+                    <option value="campeche">Campeche</option>
+                    <option value="chiapas">Chiapas</option>
+                    <option value="chihuahua">Chihuahua</option>
+                    <option value="coahuila">Coahuila</option>
+                    <option value="colima">Colima</option>
+                    <option value="durango">Durango</option>
+                    <option value="guanajuato">Guanajuato</option>
+                    <option value="guerrero">Guerrero</option>
+                    <option value="hidalgo">Hidalgo</option>
+                    <option value="jalisco">Jalisco</option>
+                    <option value="mexico">Estado de México</option>
+                    <option value="michoacan">Michoacán</option>
+                    <option value="morelos">Morelos</option>
+                    <option value="nayarit">Nayarit</option>
+                    <option value="nuevo_leon">Nuevo León</option>
+                    <option value="oaxaca">Oaxaca</option>
+                    <option value="puebla">Puebla</option>
+                    <option value="queretaro">Querétaro</option>
+                    <option value="quintana_roo">Quintana Roo</option>
+                    <option value="san_luis_potosi">San Luis Potosí</option>
+                    <option value="sinaloa">Sinaloa</option>
+                    <option value="sonora">Sonora</option>
+                    <option value="tabasco">Tabasco</option>
+                    <option value="tamaulipas">Tamaulipas</option>
+                    <option value="tlaxcala">Tlaxcala</option>
+                    <option value="veracruz">Veracruz</option>
+                    <option value="yucatan">Yucatán</option>
+                    <option value="zacatecas">Zacatecas</option>
+                </select>
+            </div>
+        </fieldset>
+
+        <!-- Datos Académicos -->
+        <fieldset>
+            <legend>Datos Académicos</legend>
+
+            <div class="form-group">
+                <label for="nivel">Nivel de Estudio:</label>
+                <select id="nivel" name="nivel" required>
+                    <option value="kinder">Kinder</option>
+                    <option value="primaria">Primaria</option>
+                    <option value="secundaria">Secundaria</option>
+                    <option value="preparatoria">Preparatoria</option>
+                    <option value="profesional">Profesional</option>
+                    <option value="maestria">Maestría</option>
+                    <option value="doctorado">Doctorado</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="escuela">Nombre de la escuela y último grado:</label>
+                <input type="text" id="escuela" name="escuela" maxlength="50" required>
+            </div>
+
+            <div class="form-group habilidades">
+                <div class="left">
+                    <label>Habilidades:</label>
+                    <label><input type="checkbox" id="expresion_escrita" name="habilidades" value="Expresion Escrita"> Expresión Escrita</label>
+                    <label><input type="checkbox" id="relaciones_interpersonales" name="habilidades" value="Relaciones Interpersonales"> Relaciones Interpersonales</label>
+                </div>
+
+                <div class="right">
+                    <label></label>
+                    <label><input type="checkbox" id="expresion_oral" name="habilidades" value="Expresion Oral"> Expresión Oral</label>
+                    <label><input type="checkbox" id="analiticas" name="habilidades" value="Analíticas"> Analíticas</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="otras_habilidades">Otras Habilidades:</label>
+                <textarea id="otras_habilidades" name="otras_habilidades" maxlength="1000"></textarea>
+            </div>
+        </fieldset>
+
+        <!-- Botones de acción -->
+        <div class="buttons">
+            <input type="submit" value="Enviar">
+            <input type="reset" value="Resetear">
+        </div>
+    </form>
+</body>
+</html>
+

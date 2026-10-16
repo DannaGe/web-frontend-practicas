@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardar JSON en un Archivo</title>
+</head>
+<body>
+    <h2>Guardar Datos JSON en un Archivo</h2>
+    <button onclick="saveJSON()">Guardar JSON</button>
+
+    <script>
+        function saveJSON() {
+            // Creamos un objeto JSON de ejemplo
+            var data = {
+                nombre: "Danna",
+                edad: 20,
+                ciudad: "Sahuayo"
+            };
+
+            // Convertimos el objeto a una cadena JSON
+            var json = JSON.stringify(data, null, 2); // "null, 2" es para formato legible
+
+            // Solicitar al usuario que ingrese el nombre del archivo mediante una ventana de diálogo
+            var filename = window.prompt("Ingresa el nombre para el archivo JSON:", "datos.json");
+
+            // Validar que el usuario haya ingresado un nombre para el archivo
+            if (filename === null) {
+                // Si el usuario cancela el prompt, se detiene la función
+                return;
+            }
+
+            // Eliminar espacios en blanco al inicio y al final del nombre del archivo
+            filename = filename.trim();
+
+            // Validar que el nombre del archivo no esté vacío después de eliminar espacios
+            if (filename === "") {
+                alert("El nombre del archivo no puede estar vacío.");
+                return; // Detiene la ejecución si el nombre del archivo está vacío
+            }
+
+            // Asegurarse de que el nombre del archivo termine con '.json'
+            if (!filename.toLowerCase().endsWith(".json")) {
+                filename += ".json"; // Añade la extensión '.json' si no está presente
+            }
+
+            // Creamos un blob de tipo JSON
+            var blob = new Blob([json], { type: "application/json" });
+
+            // Creamos un enlace temporal para descargar el archivo
+            var link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob);
+            link.download = filename; // Usa el nombre proporcionado por el usuario
+            
+            // Simulamos un clic en el enlace para iniciar la descarga
+            link.click();
+
+            // Revocar la URL creada para liberar memoria
+            window.URL.revokeObjectURL(link.href);
+        }
+    </script>
+</body>
+</html>

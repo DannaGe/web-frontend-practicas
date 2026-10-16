@@ -1,0 +1,124 @@
+<HTML>
+<HEAD>
+<TITLE> Formulario Calculadora </TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!-- HIDE FROM OTHERS BROWSERS
+
+        // variables globales -->
+        var total = 0; // Almacena el total acumulado
+        var lastOperation = "+"; // Almacena la última operación realizada
+        var newNumber = true; // Bandera para indicar si es un nuevo número
+
+        function enterNumber(digit)
+        {
+        var form = digit.form; // Referencia al formulario actual
+            if (newNumber) 
+            { 
+                    clearNumber(form); // Limpia el número si es un nuevo número
+                    newNumber = false; // Cambia la bandera ya que ya no es un nuevo número
+            }
+            form.display.value = form.display.value + digit.name; // Añade el dígito al valor actual
+        }
+
+        function clearExpr(form) 
+        {   total = 0; // Resetea el total
+            lastOperation = "+"; // Resetea la última operación
+            newNumber = true; // Marca que es un nuevo número
+            form.display.value = ""; // Limpia la pantalla    
+        }
+
+        function clearNumber(form) 
+        {   form.display.value = ""; // Limpia solo el número actual en pantalla
+        }
+
+        function calculate(operation) 
+        {
+            var form = operation.form; // Referencia al formulario actual
+            var expression = total + lastOperation + form.display.value; // Construye la expresión a evaluar
+            lastOperation = operation.value; // Almacena la nueva operación
+            total = eval(expression); // Evalúa la expresión y actualiza el total
+            form.display.value = total; // Muestra el resultado
+            newNumber = true; // Marca que el siguiente número será nuevo
+        }
+// STOP HIDING FROM OTHERS BROWSERS -->
+</SCRIPT>
+</HEAD>
+<BODY>  <FORM>
+        <TABLE BORDER = 1> <!-- Borde 1 -->
+        <TR>
+        <TD COLSPAN=4>   <!--  de cuatro columnas y filas -->
+        <INPUT TYPE=text NAME="display" VALUE="" onfocus="this.blur();">
+        <!-- Texto muestra los números y resultado, no escribir directamente (desactiva con onfocus="this.blur()") -->
+        </TD>
+        </TR>
+
+        <TR>
+        <TD>
+        <INPUT TYPE=button NAME="7" VALUE=" 7 " onclick="enterNumber(this);" >
+        <!-- Botón que representa el número 7, al hacer clic llama a la función enterNumber() pasando el botón como argumento -->
+        </TD>
+        <TD>
+        <INPUT TYPE=button NAME="8" VALUE=" 8 " onclick="enterNumber(this);" >
+        </TD>
+        <TD>
+        <INPUT TYPE=button NAME="9" VALUE=" 9 " onclick="enterNumber(this);" >
+        </TD>
+        <TD>
+        <INPUT TYPE=button NAME="+" VALUE=" + " onclick="calculate(this);" >
+        </TD>
+        </TR>
+
+        <TR>
+        <TD>
+        <INPUT TYPE=button NAME="4" VALUE=" 4 "  onclick="enterNumber(this);" >
+        </TD>
+        <TD>
+        <INPUT TYPE=button NAME="5" VALUE=" 5 " onclick="enterNumber(this);" >
+        </TD>
+        <TD>
+        <INPUT TYPE=button NAME="6" VALUE=" 6 " onclick="enterNumber(this);" >
+        </TD>
+        <TD>
+        <INPUT TYPE=button NAME="-" VALUE=" - "  onclick="calculate(this);" > 
+        </TD>
+        </TR>
+
+        <TR>
+        <TD>
+        <INPUT TYPE=button NAME="1" VALUE=" 1 " onclick="enterNumber(this);" >
+        </TD>
+        <TD>
+        <INPUT TYPE=button NAME="2" VALUE=" 2 " onclick="enterNumber(this);" >
+        </TD>
+        <TD>
+        <INPUT TYPE=button NAME="3" VALUE=" 3 " onclick="enterNumber(this);" >
+        </TD>
+        <TD>
+        <INPUT TYPE=button NAME="*" VALUE=" * " onclick="calculate (this);" >
+        </TD>
+        </TR>
+
+        <TR>
+        <TD>
+        <INPUT TYPE=button NAME="0" VALUE=" 0 " onclick="enterNumber(this);" >
+        </TD>
+        <TD>
+        <INPUT TYPE=button NAME="C" VALUE=" C " onclick="clearExpr(this.form);" >
+        </TD>
+        <TD>
+        <INPUT TYPE=button NAME="CE" VALUE=" CE " onclick="clearNumber(this.form);" >
+        </TD>
+        <TD>
+        <INPUT TYPE=button NAME="/" VALUE=" / " onclick="clearNumber(this.form);" >
+        </TD>
+        </TR>
+
+        <TR>
+        <TD>
+        <INPUT TYPE=button NAME="=" VALUE=" = " onclick="calculate(this);" >  
+        </TD>
+        </TR>
+        </TABLE>
+        </FORM>
+</BODY>
+</HTML>

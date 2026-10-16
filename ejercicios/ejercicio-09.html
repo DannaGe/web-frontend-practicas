@@ -1,0 +1,65 @@
+<HTML>
+    <HEAD>
+        <!-- Título de la página -->
+        <TITLE>Opciones</TITLE>
+        
+        <!-- Script en lenguaje JavaScript -->
+        <SCRIPT LANGUAGE="JavaScript">
+        <!-- Ocultar el script en navegadores que no soporten JavaScript -->
+            function operacion(form) {
+                // Variable para almacenar el resultado de la operación
+                var resultado = 0;
+                
+                // Evaluar el valor seleccionado en el dropdown
+                switch (form.seleccion.value) {
+                    // Sumar los valores
+                    case "suma": 
+                        resultado = 1 * form.valor1.value + 1 * form.valor2.value; 
+                        break;
+                    // Restar los valores
+                    case "resta": 
+                        resultado = form.valor1.value - form.valor2.value; 
+                        break;
+                    // Multiplicar los valores
+                    case "multiplicacion": 
+                        resultado = form.valor1.value * form.valor2.value; 
+                        break;
+                    // Dividir los valores
+                    case "division": 
+                        resultado = form.valor1.value / form.valor2.value; 
+                        break;
+                }
+                // Asignar el resultado al campo de texto correspondiente
+                form.resultado.value = resultado;
+            }
+        //<!-- Detener el ocultamiento del script -->
+        </SCRIPT>
+    </HEAD>
+    
+    <BODY>
+        <!-- Formulario para ingresar datos y seleccionar la operación -->
+        <FORM METHOD=POST>
+            <!-- Campo para el primer valor -->
+            Valor 1: <INPUT TYPE="text" NAME="valor1" VALUE=0> <BR>
+            <!-- Campo para el segundo valor -->
+            Valor 2: <INPUT TYPE="text" NAME="valor2" VALUE=0> <BR>
+            
+            <!-- Dropdown para seleccionar la operación -->
+            <SELECT NAME="seleccion" SIZE=3>
+                <!-- Opciones del dropdown -->
+                <OPTION VALUE="suma">Suma</OPTION>
+                <OPTION VALUE="resta">Resta</OPTION>
+                <OPTION VALUE="multiplicacion">Multiplicación</OPTION>
+                <OPTION VALUE="division">División</OPTION>
+            </SELECT>
+            <BR>
+            
+            <!-- Campo para mostrar el resultado -->
+            Resultado: <INPUT TYPE="text" NAME="resultado" VALUE="">
+            <BR>
+            
+            <!-- Botón para realizar el cálculo -->
+            <INPUT TYPE="button" NAME="Calcular" VALUE="CALCULAR" onClick="operacion(this.form);">
+        </FORM>
+    </BODY>
+</HTML>

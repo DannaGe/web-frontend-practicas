@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario con API Georef México</title>
+    <script>
+        // Función para obtener los estados desde la API de INEGI
+        async function obtenerEstados() {
+            try {
+                // Realizamos la solicitud a la API para obtener los estados
+                const respuesta = await fetch('https://gaia.inegi.org.mx/wscatgeo/mgee/');
+                
+                // Verificamos si la respuesta es exitosa
+                if (!respuesta.ok) {
+                    // Si hay un error en la respuesta, lanzamos una excepción
+                    throw new Error('Error al obtener los estados');
+                }
+
+                // Convertimos la respuesta a formato JSON
+                const datos = await respuesta.json();
+                
+                // Retornamos el array de estados desde la API
+                return datos.datos;
+            } catch (error) {
+                // En caso de error, lo mostramos en la consola
+                console.error(error);
+                
+                // Retornamos un array vacío si algo falla
+                return [];
+            }
+        }
+
+        // Función para llenar el dropdown de estados con los datos obtenidos
+        async function cargarEstados() {
+            // Obtenemos el array de estados llamando a la función obtenerEstados
+            const estados = await obtenerEstados();
+            
+            // Seleccionamos el elemento <select> del HTML donde se mostrarán los estados
+            const estadoSelect = document.getElementById('estado');
+
+            // Limpiamos el contenido del dropdown por si ya tiene opciones cargadas
+            estadoSelect.innerHTML = '<option value="">Selecciona un estado</option>';
+
+            // Iteramos sobre los estados y los agregamos como opciones al dropdown
+            estados.forEach(estado => {
+                // Creamos una nueva opción para cada estado
+                const option = document.createElement('option');
+                
+                // Asignamos el valor de la clave geo como valor de la opción
+                option.value = estado.cvegeo;
+                
+                // Asignamos el nombre del estado como texto visible de la opción
+                option.textContent = estado.nom_agee;
+                
+                // Añadimos la opción al dropdown
+                estadoSelect.appendChild(option);
+            });
+        }
+
+        // Al cargar la página, llamamos a la función cargarEstados
+        window.onload = function() {
+            cargarEstados();
+        };
+    </script>
+</head>
+<body>
+    <h2>Formulario de Registro</h2>
+
+    <!-- Formulario simple con campos para nombre y estado -->
+    <form>
+        <!-- Campo de texto para el nombre del usuario -->
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+
+        <!-- Dropdown para seleccionar el estado -->
+        <label for="estado">Selecciona tu Estado:</label>
+        <select id="estado" name="estado" required>
+            <!-- Opción inicial vacía mientras se cargan los estados -->
+            <option value="">Selecciona un estado</option>
+        </select><br><br>
+
+        <!-- Botón de envío del formulario -->
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>

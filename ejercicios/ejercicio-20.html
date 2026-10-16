@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <!-- Configuración para que la página sea responsiva en diferentes dispositivos -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardar JSON en un Archivo</title>
+    <style>
+        /* Estilos básicos para una mejor presentación */
+
+        /* Estilo general del cuerpo de la página */
+        body {
+            font-family: Arial, sans-serif; /* Define la fuente tipográfica para todo el contenido */
+            margin: 20px; /* Añade un margen alrededor del contenido para que no esté pegado a los bordes */
+        }
+
+        /* Estilo para cada grupo de formulario (etiqueta + campo de entrada) */
+        .form-group {
+            margin-bottom: 15px; /* Espacio inferior entre cada grupo de formulario para separar visualmente los campos */
+        }
+
+        /* Estilo para las etiquetas de los campos de entrada */
+        label {
+            display: inline-block; /* Permite definir un ancho fijo para las etiquetas */
+            width: 100px; /* Ancho fijo para alinear las etiquetas uniformemente */
+        }
+
+        /* Estilo para los campos de entrada */
+        input {
+            padding: 5px; /* Espacio interno para que el texto ingresado no esté pegado a los bordes del campo */
+            width: 200px; /* Ancho fijo para los campos de entrada */
+        }
+
+        /* Estilo para el botón de guardar JSON */
+        button {
+            padding: 10px 20px; /* Espacio interno para hacer el botón más grande y fácil de clicar */
+            cursor: pointer; /* Cambia el cursor a una mano al pasar sobre el botón, indicando que es clicable */
+            background-color: #28a745; /* Color de fondo verde para indicar acción positiva */
+            color: #ffffff; /* Texto en color blanco para contrastar con el fondo */
+            border: none; /* Sin borde predeterminado del botón */
+            border-radius: 4px; /* Esquinas redondeadas para el botón */
+            font-size: 16px; /* Tamaño de fuente legible */
+            transition: background-color 0.3s ease; /* Transición suave para cambios de color */
+        }
+
+        /* Estilo para el botón cuando el usuario pasa el cursor sobre él */
+        button:hover {
+            background-color: #218838; /* Cambio a un tono verde más oscuro al pasar el cursor */
+        }
+    </style>
+</head>
+<body>
+    <!-- Título principal de la página -->
+    <h2>Guardar Datos JSON en un Archivo</h2>
+
+    <!-- Formulario para que el usuario ingrese sus datos -->
+    <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <!-- Campo de entrada para el nombre -->
+        <input type="text" id="nombre" placeholder="Ingresa tu nombre">
+    </div>
+    <div class="form-group">
+        <label for="edad">Edad:</label>
+        <!-- Campo de entrada para la edad, tipo numérico -->
+        <input type="number" id="edad" placeholder="Ingresa tu edad">
+    </div>
+    <div class="form-group">
+        <label for="ciudad">Ciudad:</label>
+        <!-- Campo de entrada para la ciudad -->
+        <input type="text" id="ciudad" placeholder="Ingresa tu ciudad">
+    </div>
+    <!-- Botón que al ser clicado ejecuta la función saveJSON para guardar los datos ingresados -->
+    <button onclick="saveJSON()">Guardar JSON</button>
+
+    <script>
+        // Función para guardar los datos ingresados por el usuario en un archivo JSON
+        function saveJSON() {
+            // Obtener los valores de los campos de entrada y eliminar espacios en blanco al inicio y al final
+            var nombre = document.getElementById("nombre").value.trim();
+            var edad = document.getElementById("edad").value.trim();
+            var ciudad = document.getElementById("ciudad").value.trim();
+
+            // Validar que los campos no estén vacíos
+            if (nombre === "" || edad === "" || ciudad === "") {
+                alert("Por favor, completa todos los campos antes de guardar.");
+                return; // Detiene la ejecución de la función si falta algún campo
+            }
+
+            // Solicitar al usuario que ingrese el nombre del archivo mediante una ventana de diálogo
+            var filename = window.prompt("Ingresa el nombre para el archivo JSON:", "datos.json");
+
+            // Validar que el usuario haya ingresado un nombre para el archivo
+            if (filename === null) {
+                // Si el usuario cancela el prompt, se detiene la función
+                return;
+            }
+
+            // Eliminar espacios en blanco al inicio y al final del nombre del archivo
+            filename = filename.trim();
+
+            // Validar que el nombre del archivo no esté vacío después de eliminar espacios
+            if (filename === "") {
+                alert("El nombre del archivo no puede estar vacío.");
+                return; // Detiene la ejecución si el nombre del archivo está vacío
+            }
+
+            // Asegurarse de que el nombre del archivo termine con '.json'
+            if (!filename.toLowerCase().endsWith(".json")) {
+                filename += ".json"; // Añade la extensión '.json' si no está presente
+            }
+
+            // Crear un objeto JSON con los datos ingresados por el usuario
+            var data = {
+                nombre: nombre,
+                edad: parseInt(edad, 10), // Convertir la edad a un número entero
+                ciudad: ciudad
+            };
+
+            // Convertir el objeto a una cadena JSON con formato legible (indentación de 2 espacios)
+            var json = JSON.stringify(data, null, 2); // "null, 2" es para formato legible
+
+            // Crear un Blob de tipo JSON con el contenido
+            var blob = new Blob([json], { type: "application/json" });
+
+            // Crear un enlace temporal para descargar el archivo
+            var link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob); // Genera una URL para el Blob creado
+            link.download = filename; // Usa el nombre del archivo proporcionado por el usuario
+
+            // Simular un clic en el enlace para iniciar la descarga
+            link.click();
+
+            // Revocar la URL creada para liberar memoria
+            window.URL.revokeObjectURL(link.href);
+        }
+    </script>
+</body>
+</html>

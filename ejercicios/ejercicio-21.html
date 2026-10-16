@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardar Datos en un Archivo de Texto</title>
+</head>
+<body>
+    <h2>Guardar Datos en un Archivo de Texto</h2> <!-- Texto del encabezado corregido -->
+
+    <!-- Campo para ingresar el nombre del archivo -->
+    <label for="fileName">Nombre de Archivo: </label>
+    <input type="text" id="fileName" placeholder="ingresa nombre de archivo"><br><br>
+
+    <!-- Área de texto para que el usuario ingrese contenido -->
+    <textarea id="content" rows="10" cols="50" placeholder="Escribe algo aquí..."></textarea><br><br>
+
+    <!-- Botón para guardar el archivo -->
+    <button onclick="saveToFile()">Guardar en Archivo</button><br><br>
+
+    <script>
+        // Función para guardar archivo
+        function saveToFile() {
+            // Obtener el contenido del textarea
+            var content = document.getElementById("content").value;
+            // Obtener el nombre del archivo
+            var fileName = document.getElementById("fileName").value || 'archivo'; // Valor por defecto 'archivo' si no hay nombre
+
+            // Crear un blob que contenga el texto del textarea como texto plano (text/plain)
+            var blob = new Blob([content], { type: "text/plain" });
+
+            // Crear un enlace temporal (<a>) para descargar el archivo
+            var link = document.createElement("a");
+
+            // Crear una URL temporal que apunte al blob y asignársela al enlace
+            link.href = window.URL.createObjectURL(blob);
+
+            // Especificar el nombre que tendrá el archivo descargado
+            link.download = fileName + ".txt";
+
+            // Simular un clic en el enlace para que el archivo se descargue
+            link.click();
+
+            // Liberar la URL temporal para no consumir memoria innecesaria
+            window.URL.revokeObjectURL(link.href);
+        }
+    </script>
+</body>
+</html>
